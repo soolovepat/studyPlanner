@@ -5,7 +5,7 @@ import datetime as dt
 from pymongo import MongoClient
 client = MongoClient('mongodb+srv://sparta:test@cluster0.efcklz9.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
-
+#ddd
 @app.route('/')
 def home():
     return render_template('index.html')
