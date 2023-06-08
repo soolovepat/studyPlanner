@@ -16,7 +16,9 @@ db = client.dbsparta
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    username = session.get('username')
+    logged_in = username is not None
+    return render_template('index.html', username=username, logged_in=logged_in)
 
 
 # DB 저장
@@ -88,7 +90,7 @@ def login():
             session['username'] = username
             return redirect(url_for('index'))
         else:
-            flash('Invalid username or password')
+            flash('아이디 또는 비밀번호가 틀렸습니다')
             return redirect(url_for('login'))
 
     return render_template('login.html')
@@ -103,13 +105,13 @@ def register():
         existing_user = users_collection.find_one({'username': username})
 
         if existing_user:
-            flash('Username already exists')
+            flash('아이디가 사용중입니다')
             return redirect(url_for('register'))
 
         new_user = {'username': username, 'password': password}
         users_collection.insert_one(new_user)
 
-        flash('Registration successful. Please log in.')
+        flash('회원가입성공! 로그인해주세요')
         return redirect(url_for('login'))
 
     return render_template('register1.html')

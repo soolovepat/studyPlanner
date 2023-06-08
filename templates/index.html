@@ -266,12 +266,20 @@
       
     </script>
   </head>
-  <body>
+    
+    
     <div class="mybox0">
       <div class="mybox">
         <h1>Study Planner</h1>
+        {% if logged_in %}
+        <a>환영합니다, {{ username }}!</a>
+        <a href="{{ url_for('logout') }}">로그아웃</a>
+      {% else %}
         <a href="{{ url_for('login') }}">로그인</a>
         <a href="{{ url_for('register') }}">회원가입</a>
+      {% endif %}
+        <!-- <a href="{{ url_for('login') }}">로그인</a>
+        <a href="{{ url_for('register') }}">회원가입</a> -->
 
 
       </div>      
