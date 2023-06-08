@@ -1,39 +1,84 @@
+<!-- register.html -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입</title>
+  <script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
-    
-</head>
-<script>
-    function register() {
-        let id = $('#ID_reg').val()
-        let password = $('#PW_reg').val()
-        
-        let formData = new FormData();
-        formData.append("id_give", id);
-        formData.append("password_give", password);
+    document.addEventListener('DOMContentLoaded', function() {
+      var flashMessage = "{{ get_flashed_messages() | join('\n') }}";
+      if (flashMessage.trim() !== '') {
 
-        fetch('/study_planner/register', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
-            alert(data["msg"]);
-            window.location.reload();
-          });
+        alert(flashMessage);
+      }
+    });
+  </script>
+  <style>
+    .body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
       }
       
-</script>
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      
+      h1 {
+        text-align: center;
+      }
+      
+      form {
+        margin-top: 20px;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 8px;
+      }
+      
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      p {
+        text-align: center;
+      }
+  </style>
+</head>
 <body>
-    <h1> 회원가입 </h1>
-    <p class="mytxt" id="ID_reg">아이디: <input type="text" /></p>
-    <p class="mytxt" id="PW_reg"> 비밀번호: <input type="text" /></p>
-    <p class="mytxt" id="PW_reent"> 비밀번호 재확인: <input type="text" /></p>
-    <button class="mybotton" onclick="register()"> 가입하기</button>
+  <h1>회원가입</h1>
+  
+  <form method="post" action="{{ url_for('register') }}">
+    <label for="username">ID:</label>
+    <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required><br><br>
+    <label for="password">PW:</label>
+    <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required><br><br>
+    <input type="submit" value="Register">
+
+  </form>
 </body>
 </html>
