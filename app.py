@@ -8,7 +8,6 @@ import threading
 import time
 
 import datetime as dt
-#test 용입니다.
 from pymongo import MongoClient
 client = MongoClient('mongodb+srv://sparta:test@cluster0.efcklz9.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
@@ -103,7 +102,7 @@ def show_notification():
         return redirect(url_for("form_view"))
 
    
-# 서브페이지 - 데이터 조회
+# 뷰페이지 - 데이터 조회
 @app.route('/form_view')
 def form_view():
     data = list(db.study_planner.find({}, {'_id': False}))
