@@ -26,7 +26,7 @@
       rel="stylesheet"
     />
 
-    <title>Study Planner</title>
+    <title>Study Planner 뷰페이지</title>
 
     <style>
       * {
@@ -140,20 +140,37 @@
       }
     </style>
     <script>
-             
-
-      function save_plan() {
-        let group = $('#group').val()
-        let plan = $('#plan').val()
+      $(document).ready(function () {
+        show_form();
+      });
+      function show_form() {
         
-        let formData = new FormData();
-        formData.append("group_give", group);
-        formData.append("plan_give", plan);
+        fetch('/study_planner').then(res => res.json()).then(data => {
+                let rows = data['result']
+                console.log(rows)
+                $('#plan-list').empty()
+                rows.forEach((a)=>{
+                  let plan = a['plan']
+                  let num = a['num']
+                  let done = a['done']
+                  let temp_html = ``
+                  
+                  if(done == 0) {
+                    temp_html = `<li>
+                                    <h2>✅ ${plan}</h2>
+                                    <button onclick="done_plan(${num})" type="button" class="btn btn-outline-primary">완료!</button>
+                                  </li>`
+                  } else {
+                    temp_html = `<li>
+                                    <h2 class="done">✅ ${plan}</h2>
+                                    <button onclick="undo_plan(${num})" type="button" class="btn btn-outline-danger">취소!</button>
+                                  </li>`
+                  }
 
-        fetch('/study_planner', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
-            alert(data["msg"]);
-            window.location.reload();
-          });
+                $('#plan-list').append(temp_html)
+                })
+                
+            })
       }
 
       function done_plan(num) {
@@ -176,6 +193,7 @@
           });
       }
 
+
       
     </script>
   </head>
@@ -184,18 +202,10 @@
       <div class="mybox">
         <h1>Study Planner</h1>
       </div>      
-      <div class="mybox">
-        
-        <div class="myplan">
-          <form action="{{ url_for('input_form') }}" method="GET">
-            <button type="submit">기록하러가기</button>
-            <a href="/form_view">서브페이지로 이동</a>
-          </form>
-        </div>
-      </div>
+
       <div class="mybox" id="plan-list">
         <li>
-          
+          <h2>✅ JS 공부하기</h2>
           <a></a>
         </li>
       </div>

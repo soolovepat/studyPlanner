@@ -26,7 +26,7 @@
       rel="stylesheet"
     />
 
-    <title>Study Planner</title>
+    <title>Study Planner 입력페이지</title>
 
     <style>
       * {
@@ -140,7 +140,15 @@
       }
     </style>
     <script>
-             
+      
+
+      function showNotification() {
+      alert("저장 완료!");
+      // 일정 시간이 지난 후에 페이지 이동
+      setTimeout(function() {
+        window.location.href = "/form_view"; // 조회 페이지로 이동
+      }, 1000); // 1초 후에 이동
+      }
 
       function save_plan() {
         let group = $('#group').val()
@@ -150,9 +158,13 @@
         formData.append("group_give", group);
         formData.append("plan_give", plan);
 
-        fetch('/study_planner', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
-            alert(data["msg"]);
-            window.location.reload();
+        fetch('/input_form', {method: "POST",body: formData,})
+        .then((response) => response.json())
+        .then((data) => {
+            
+            // 저장이 완료되면 알림 표시 및 페이지 이동
+            showNotification();
+            
           });
       }
 
@@ -160,7 +172,7 @@
         let formData = new FormData();
         formData.append("num_give", num);
 
-        fetch('/study_planner/done', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
+        fetch('/input_form/done', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
             alert(data["msg"]);
             window.location.reload();
           });
@@ -170,7 +182,7 @@
         let formData = new FormData();
         formData.append("num_give", num);
 
-        fetch('/study_planner/undo', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
+        fetch('/input_form/undo', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
             alert(data["msg"]);
             window.location.reload();
           });
@@ -187,18 +199,20 @@
       <div class="mybox">
         
         <div class="myplan">
-          <form action="{{ url_for('input_form') }}" method="GET">
-            <button type="submit">기록하러가기</button>
-            <a href="/form_view">서브페이지로 이동</a>
-          </form>
+          <div class="input-group">
+            <select class="form-s select" id="group">
+                <option selected>그룹 선택</option>
+                <option value="1">공부 계획</option>
+                <option value="2">할 일</option>
+            </select>
+          </div>
+          <input
+            id="plan" class="plan-input" type="text" placeholder="할 일을 입력하세요" />
+          <button onclick="save_plan()" type="button" class="btn btn-outline-primary">기록하기</button>
+          
         </div>
       </div>
-      <div class="mybox" id="plan-list">
-        <li>
-          
-          <a></a>
-        </li>
-      </div>
+      
     </div>
   </body>
 </html>
