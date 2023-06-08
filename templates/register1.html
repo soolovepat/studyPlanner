@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    function register() {
+        let id = $('#ID_reg').val()
+        let password = $('#PW_reg').val()
+        
+        let formData = new FormData();
+        formData.append("id_give", id);
+        formData.append("password_give", password);
+
+        fetch('/study_planner/register', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
+            alert(data["msg"]);
+            window.location.reload();
+          });
+      }
+      
+</script>
+<body>
+    <h1> 회원가입 </h1>
+    <p class="mytxt" id="ID_reg">아이디: <input type="text" /></p>
+    <p class="mytxt" id="PW_reg"> 비밀번호: <input type="text" /></p>
+    <p class="mytxt" id="PW_reent"> 비밀번호 재확인: <input type="text" /></p>
+    <button class="mybotton" onclick="register()"> 가입하기</button>
+</body>
+</html>
