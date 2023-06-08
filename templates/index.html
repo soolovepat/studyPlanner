@@ -1,94 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:title" content="Study Planner" />
-    <meta property="og:description" content="스터디플래너입니다" />
-    <meta property="og:image" content="https://images.pexels.com/photos/10330489/pexels-photo-10330489.jpeg?cs=srgb&dl=pexels-bruno-abdiel-10330489.jpg&fm=jpg" />
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="Study Planner" />
+  <meta property="og:description" content="스터디플래너입니다" />
+  <meta property="og:image"
+    content="https://images.pexels.com/photos/10330489/pexels-photo-10330489.jpeg?cs=srgb&dl=pexels-bruno-abdiel-10330489.jpg&fm=jpg" />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
-      rel="stylesheet"
-    />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
-    <title>Study Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" />
 
-    <style>
-      * {
-        font-family: "Gowun Dodum", sans-serif;
-      }
-      .mybox0 {
-        width: 90%;
-        margin: 20px auto;
+  <title>Study Planner</title>
 
-        color: #000;
-        box-shadow: 0px 0px 10px 0px lightblue;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
+  <style>
+    * {
+      font-family: "Gowun Dodum", sans-serif;
+    }
 
-      .mybox > h1 {
-        max-width: 75%;
-        font-size: 50px;
-        font-weight: 500;
-        text-align: left;
-        margin-right: auto;
-        margin-bottom: 0px;
-      }
+    .mybox0 {
+      width: 90%;
+      margin: 20px auto;
 
-      .mybox {
-        width: 90%;
-        padding: 20px;
-        
-        margin: 20px auto;
-      }
-      .myplan {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
+      color: #000;
+      box-shadow: 0px 0px 10px 0px lightblue;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-      .myplan > input {
-        width: 70%;
-      }
-      .mybox > li {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
+    .mybox>h1 {
+      max-width: 60%;
+      font-size: 50px;
+      font-weight: 300;
+      text-align: left;
+      margin-right: auto;
+      margin-bottom: 0px;
+      /* background-color: green; */
+    }
 
-        margin-bottom: 10px;
-        min-height: 48px;
-      }
-      .mybox > li > h2 {
-        max-width: 75%;
-        font-size: 20px;
-        font-weight: 500;
-        margin-right: auto;
-        margin-bottom: 0px;
-      }
-      .mybox > li > h2.done {
-        text-decoration: line-through;
-      }
-      /*.plan-select {
+    .mybox {
+      width: 90%;
+      padding: 20px;
+      /* background-color: green; */
+      margin: 20px auto;
+    }
+
+    .myplan {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .myplan>input {
+      width: 70%;
+    }
+
+    .mybox>li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      margin-bottom: 10px;
+      min-height: 48px;
+    }
+
+    .mybox>li>h2 {
+      max-width: 75%;
+      font-size: 20px;
+      font-weight: 500;
+      margin-right: auto;
+      margin-bottom: 0px;
+    }
+
+    .mybox>li>h2.done {
+      text-decoration: line-through;
+    }
+
+    /*.plan-select {
         display: block;
         width: 100%;
         padding: 0.375rem 2.25rem 0.375rem 0.75rem;
@@ -109,19 +109,19 @@
         -moz-appearance: none;
         appearance: none;
       }*/
-      .input-group {
-        flex-basis: 200px;
-        
-      }
+    .input-group {
+      flex-basis: 200px;
 
-      .form-s {
-        width: 100%;
-        border: 1px solid #ced4da;
-        padding: 0.375rem 0.75rem;
-      }
+    }
 
-      .plan-input {
-      
+    .form-s {
+      width: 100%;
+      border: 1px solid #ced4da;
+      padding: 0.375rem 0.75rem;
+    }
+
+    .plan-input {
+
       display: block;
       padding: 0.375rem 0.75rem;
       font-size: 1rem;
@@ -135,112 +135,188 @@
       -moz-appearance: none;
       appearance: none;
       border-radius: 0.25rem;
-      transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-      
-      }
-    </style>
-    <script>
-      $(document).ready(function () {
-        show_plan();
-      });
-      function show_plan() {
-        
-        fetch('/study_planner').then(res => res.json()).then(data => {
-                let rows = data['result']
-                $('#plan-list').empty()
-                rows.forEach((a)=>{
-                  let plan = a['plan']
-                  let num = a['num']
-                  let done = a['done']
-                  let temp_html = ``
-                  
-                  if(done == 0) {
-                    temp_html = `<li>
+      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    }
+
+    .date-style {
+      /* display: inline; */
+      font-size: large;
+      text-align: right;
+      float: right, top;
+      width: 300px;
+      padding: 2px;
+      background-color: green;
+
+    }
+
+    .dday-input {
+
+      text-align: right;
+      float: right;
+      display: inline;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: #212529;
+      background-color: gold;
+      background-clip: padding-box;
+      border: 1px solid #ced4da;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      border-radius: 0.25rem;
+      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    }
+
+    .button {
+      background-color: rgb(147, 147, 157);
+      float: right;
+      border: none;
+      color: white;
+      padding: 3px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline;
+      font-size: 14px;
+      margin: 2px 2px;
+      cursor: pointer;
+      border-radius: 10%;
+    }
+  </style>
+
+  <script>
+    $(document).ready(function () {
+      show_plan();
+    });
+    function show_plan() {
+
+      fetch('/study_planner').then(res => res.json()).then(data => {
+        let rows = data['result']
+        $('#plan-list').empty()
+        rows.forEach((a) => {
+          let plan = a['plan']
+          let num = a['num']
+          let done = a['done']
+          let temp_html = ``
+
+          if (done == 0) {
+            temp_html = `<li>
                                     <h2>✅ ${plan}</h2>
                                     <button onclick="done_plan(${num})" type="button" class="btn btn-outline-primary">완료!</button>
                                   </li>`
-                  } else {
-                    temp_html = `<li>
+          } else {
+            temp_html = `<li>
                                     <h2 class="done">✅ ${plan}</h2>
                                     <button onclick="undo_plan(${num})" type="button" class="btn btn-outline-danger">취소!</button>
                                   </li>`
-                  }
+          }
 
-                $('#plan-list').append(temp_html)
-                })
-                
-            })
-      }
+          $('#plan-list').append(temp_html)
+        })
 
-      function save_plan() {
-        let group = $('#group').val()
-        let plan = $('#plan').val()
-        
-        let formData = new FormData();
-        formData.append("group_give", group);
-        formData.append("plan_give", plan);
+      })
+    }
 
-        fetch('/study_planner', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
-            alert(data["msg"]);
-            window.location.reload();
-          });
-      }
+    function save_plan() {
+      let group = $('#group').val()
+      let plan = $('#plan').val()
 
-      function done_plan(num) {
-        let formData = new FormData();
-        formData.append("num_give", num);
+      let formData = new FormData();
+      formData.append("group_give", group);
+      formData.append("plan_give", plan);
 
-        fetch('/study_planner/done', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
-            alert(data["msg"]);
-            window.location.reload();
-          });
-      }
+      fetch('/study_planner', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
+        alert(data["msg"]);
+        window.location.reload();
+      });
+    }
 
-      function undo_plan(num) {
-        let formData = new FormData();
-        formData.append("num_give", num);
+    function done_plan(num) {
+      let formData = new FormData();
+      formData.append("num_give", num);
 
-        fetch('/study_planner/undo', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
-            alert(data["msg"]);
-            window.location.reload();
-          });
-      }
+      fetch('/study_planner/done', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
+        alert(data["msg"]);
+        window.location.reload();
+      });
+    }
 
+    function undo_plan(num) {
+      let formData = new FormData();
+      formData.append("num_give", num);
+
+      fetch('/study_planner/undo', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
+        alert(data["msg"]);
+        window.location.reload();
+      });
+    }
+
+    function present_date() {
+      let today = new Date();
+      let day = ['일', '월', '화', '수', '목', '금', '토',]
+
+      document.getElementById("presentdate").innerHTML = today.getFullYear() + "년 " + today.getMonth() + "월 "
+        + today.getDate() + "일 " + day[today.getDay()] + "요일"
+      // $('#presentdate').text(today)
+      // window.location.reload();
+
+    }
+
+    function present_date() {
+      let today = new Date();
+      let day = ['일', '월', '화', '수', '목', '금', '토',]
+
+      document.getElementById("presentdate").innerHTML = today.getFullYear() + "년 " + today.getMonth() + "월 "
+        + today.getDate() + "일 " + day[today.getDay()] + "요일"
+      // $('#presentdate').text(today)
+      // window.location.reload();
+
+    }
+
+
+
+  </script>
+</head>
+
+<body>
+  <div class="mybox0">
+    <div class="mybox">
+      <h1>Study Planner</h1>
       
-    </script>
-  </head>
-  <body>
-    <div class="mybox0">
-      <div class="mybox">
-        <h1>Study Planner</h1>
-      </div>      
-      <div class="mybox">
-        
-        <div class="myplan">
-          <div class="input-group">
-            <select class="form-s select" id="group">
-                <option selected>그룹 선택</option>
-                <option value="1">공부 계획</option>
-                <option value="2">할 일</option>
-            </select>
-          </div>
-          <input
-            id="plan"
-            class="plan-input"
-            type="text"
-            placeholder="할 일을 입력하세요"
-          />
-          <button onclick="save_plan()" type="button" class="btn btn-outline-primary">기록하기</button>
+      <p class="date-style" id="presentdate">
+        <script>present_date()</script>
+      </p>
+      <p>
+        <input id="plan" class="dday-input" type="text" placeholder="d-day 목표" />
+        <button onclick="save_plan()" type="button" class="button">시작!</button>
+      </p>
+    </div>
+    <div class="mybox">
+
+      <div class="myplan">
+        <div class="input-group">
+          <select class="form-s select" id="group">
+            <option selected>그룹 선택</option>
+            <option value="1">공부 계획</option>
+            <option value="2">할 일</option>
+          </select>
         </div>
-      </div>
-      <div class="mybox" id="plan-list">
-        <li>
-          <h2>✅ JS 공부하기</h2>
-          <a></a>
-        </li>
+        <input id="plan" class="plan-input" type="text" placeholder="할 일을 입력하세요" />
+        <button onclick="save_plan()" type="button" class="btn btn-outline-primary">기록하기</button>
       </div>
     </div>
-  </body>
+    <div class="mybox" id="plan-list">
+      <li>
+        <h2>✅ JS 공부하기</h2>
+        <a></a>
+      </li>
+    </div>
+  </div>
+</body>
+
 </html>
 
 

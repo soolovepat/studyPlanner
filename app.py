@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
-import datetime as dt
+# import datetime as dt
 from pymongo import MongoClient
 client = MongoClient('mongodb+srv://sparta:test@cluster0.efcklz9.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
-#ddd111111
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -49,18 +49,18 @@ def plan_get():
     all_plans = list(db.study_planner.find({},{'_id':False}))
     return jsonify({'result': all_plans})
 
-# 날짜
-@app.route("/datedata")
-def date_time():
-    date_receive = dt.datetime.today().year
-    date_receive = dt.datetime.today().month
-    date_receive = dt.datetime.today().day
-    date_receive = dt.datetime.today().year
+# # 날짜
+# @app.route("/datedata")
+# def date_time():
+#     date_receive = dt.datetime.today().year
+#     date_receive = dt.datetime.today().month
+#     date_receive = dt.datetime.today().day
+#     date_receive = dt.datetime.today().year
 
-    date_DayOfWeek = dt.datetime.weekday()
+#     date_DayOfWeek = dt.datetime.weekday()
 
 
-    return jsonify({'date':date_receive},{'dayofweek':date_DayOfWeek})
+#     return jsonify({'date':date_receive},{'dayofweek':date_DayOfWeek})
 
 if __name__ == '__main__':
 
