@@ -49,18 +49,21 @@ def plan_get():
     all_plans = list(db.study_planner.find({},{'_id':False}))
     return jsonify({'result': all_plans})
 
-# # 날짜
-# @app.route("/datedata")
-# def date_time():
-#     date_receive = dt.datetime.today().year
-#     date_receive = dt.datetime.today().month
-#     date_receive = dt.datetime.today().day
-#     date_receive = dt.datetime.today().year
+# dday plan DB post(save)
+@app.route("/study_ddayplan", methods=["POST"])
+def ddayplan_post():
+    dday_plan = request.form['ddayplan_give']
+    doc = {
+        'ddplan': dday_plan
+    }
+    db.dday_plan.insert_one(doc)
+    return jsonify({'msg': 'dday 저장 완료!'})
 
-#     date_DayOfWeek = dt.datetime.weekday()
-
-
-#     return jsonify({'date':date_receive},{'dayofweek':date_DayOfWeek})
+# dday plan DB get
+@app.route("/study_ddayplan", methods=["GET"])
+def ddayplan_get():
+    all_plans = list(db.study_planner.find({},{'_id':False}))
+    return jsonify({'result': all_plans})
 
 if __name__ == '__main__':
 

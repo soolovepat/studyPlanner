@@ -141,17 +141,27 @@
 
     .date-style {
       /* display: inline; */
-      font-size: large;
+      font-size: medium;
       text-align: right;
-      float: right, top;
-      width: 300px;
+      float: right;
+      width: 170px;
       padding: 2px;
-      background-color: green;
+      background-color: white;
+
+    }
+
+    .ddate-style {
+      /* display: inline; */
+      font-size: medium;
+      text-align: right;
+      float: right;
+      width: 100px;
+      padding: 2px;
+      background-color: white;
 
     }
 
     .dday-input {
-
       text-align: right;
       float: right;
       display: inline;
@@ -160,15 +170,12 @@
       font-weight: 400;
       line-height: 1.3;
       color: #212529;
-      background-color: gold;
+      background-color: white;
       background-clip: padding-box;
       border: 1px solid #ced4da;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
       border-radius: 0.25rem;
       transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-
+      text-overflow: ellipsis;
     }
 
     .button {
@@ -257,23 +264,37 @@
     function present_date() {
       let today = new Date();
       let day = ['일', '월', '화', '수', '목', '금', '토',]
+      let month = today.getMonth() + 1;
 
-      document.getElementById("presentdate").innerHTML = today.getFullYear() + "년 " + today.getMonth() + "월 "
+      document.getElementById("presentdate").innerHTML = today.getFullYear() + "년 " + month + "월 "
         + today.getDate() + "일 " + day[today.getDay()] + "요일"
       // $('#presentdate').text(today)
       // window.location.reload();
 
     }
 
-    function present_date() {
-      let today = new Date();
-      let day = ['일', '월', '화', '수', '목', '금', '토',]
+    function save_ddayplan() {
+      let ddayplan = $('#ddayplan').val()
 
-      document.getElementById("presentdate").innerHTML = today.getFullYear() + "년 " + today.getMonth() + "월 "
-        + today.getDate() + "일 " + day[today.getDay()] + "요일"
-      // $('#presentdate').text(today)
-      // window.location.reload();
+      let formData = new FormData();
+      formData.append("ddayplan_give", ddayplan);
 
+      fetch('/study_ddayplan', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
+        alert(data["msg"]);
+        window.location.reload();
+      });
+    }
+
+    function show_dday() {
+      fetch('/guestbook').then((res) => res.json()).then((data) => {
+        let rows = data['result']
+        $('#dday').empty()
+        rows.forEach((a) => {
+          let name = a['name']
+          let temp_html = ` <p class="ddate-style" >D-day  100</p>`
+          $('#dday').append(temp_html)
+        })
+      })
     }
 
 
@@ -285,13 +306,14 @@
   <div class="mybox0">
     <div class="mybox">
       <h1>Study Planner</h1>
-      
+
       <p class="date-style" id="presentdate">
         <script>present_date()</script>
       </p>
+      <p class="ddate-style" id="dday">D-day 100</p>
       <p>
-        <input id="plan" class="dday-input" type="text" placeholder="d-day 목표" />
-        <button onclick="save_plan()" type="button" class="button">시작!</button>
+        <input id="ddaysave" class="dday-input" type="text" placeholder="d-day 목표" />
+        <button onclick="save_ddayplan()" type="button" class="button">시작!</button>
       </p>
     </div>
     <div class="mybox">
