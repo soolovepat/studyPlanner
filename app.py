@@ -82,15 +82,15 @@ def ddayplan_get():
     return jsonify({'ddayResult': ddplans})
 #---------------------------------------------D-DAY 플랜 DB END
 
-@app.route("/study_ddayplan", methods=["GET"])
-def weather_get():
-    html = requests.get('https://search.naver.com/search.naver?query=날씨')
-    soup = bs(html.text,'html.parser')
+# @app.route("/study_ddayplan", methods=["GET"])
+# def weather_get():
+#     html = requests.get('https://search.naver.com/search.naver?query=날씨')
+#     soup = bs(html.text,'html.parser')
 
-    data1 = soup.find('span',{'class':'blind'})
+#     data1 = soup.find('span',{'class':'blind'})
 
-    ## 뭐지
-    return jsonify({'weatherResult': data1})
+#     ## 뭐지
+#     return jsonify({'weatherResult': data1})
 
 
 
