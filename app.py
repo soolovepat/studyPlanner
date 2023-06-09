@@ -29,13 +29,15 @@ def index():
 def plan_post():
     group_receive = request.form['group_give']
     plan_receive = request.form['plan_give']
+    page_receive = request.form['page_give']
     plan_list = list(db.study_planner.find({}, {'_id': False}))
     count = len(plan_list) + 1
-
+      
     doc = {
         'group':group_receive,
         'plan':plan_receive,
         'num': count,
+        'page': page_receive,
         'done': 0
     }
 
