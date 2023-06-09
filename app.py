@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask,session, redirect, url_for, render_template, request, jsonify,flash
 from bs4 import BeautifulSoup as bs
 from pprint import pprint
@@ -12,12 +11,7 @@ app.config['PREFERRED_URL_SCHEME'] = 'http'  # URL 스킴을 설정합니다.
 
 import threading
 import time
-=======
-from flask import Flask, session, redirect, url_for, render_template, request, jsonify, flash
-import threading
-import time
 import datetime as dt
->>>>>>> reg-2
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -137,20 +131,14 @@ def input_form():
         count = len(plan_list) + 1
         
         doc = {
-<<<<<<< HEAD
+
+            'username': username,
             'group': group_receive,
             'plan': plan_receive,
             'day': day_receive,
             'num': count,
             'done': 0
-=======
-        'username': username,
-        'group':group_receive,
-        'plan':plan_receive,
-        'num': count,
-        'done': 0
-        
->>>>>>> reg-2
+
         }
         db.study_planner.insert_one(doc)
         
@@ -219,11 +207,7 @@ def logout():
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    
-    app.run('0.0.0.0', port=5000, debug=True)
-=======
+
     app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.run('0.0.0.0', port=5001, debug=True)
->>>>>>> reg-2
