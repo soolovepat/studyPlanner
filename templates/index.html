@@ -204,6 +204,7 @@
       /*현재 날짜 css*/
       font-size: medium;
       text-align: right;
+      font-weight: 900;
       float: right;
       width: 200px;
       padding: 2px;
@@ -220,6 +221,7 @@
       width: 100px;
       padding: 2px;
       background-color: white;
+      white-space: nowrap;
 
     }
 
@@ -237,6 +239,24 @@
       text-overflow: ellipsis;
       /*글자 길면 ...형태로*/
       white-space: nowrap;
+      /*줄바꿈 하지 않겠음*/
+    }
+
+    .weather-style {
+      /*weather 플랜관련 css*/
+      font-size: 16px;
+      /* display: inline block; */
+      text-align: left;
+      float: right;
+      width: 200px;
+      height: 18px;
+      padding: 1.2px;
+      background-color: white;
+      font-weight: 30px;
+      margin: 0px 2px;
+      /* text-overflow: ellipsis; */
+      /*글자 길면 ...형태로*/
+      /* white-space: nowrap; */
       /*줄바꿈 하지 않겠음*/
     }
 
@@ -297,6 +317,7 @@
   <script>
     $(document).ready(function () {
       show_plan();
+      show_weather()
     });
     function show_plan() {
 
@@ -405,7 +426,7 @@
 
         /* into html */
         let temp_html = `<b class="ddate-style" id="dday">D-day ${resulttime}</b>
-        <b class="ddate-style" id="ddayplanwrite">${convdplan}</b>
+        <b class="ddayplan-style" id="ddayplanwrite">${convdplan}</b>
         <b id="weater" class="ddate-style"></b>
         `
         $('#dday').append(temp_html)
@@ -413,21 +434,19 @@
       })
     }
 
-    // function show_weather() {    /*python에서 하나씩 데이터가 안받아져서 그냥 데이터 다 가져오고 거기서 object 객체의 마지막 순번을 가져왔습니다.*/
-    //   fetch('/weatherdata').then((res) => res.json()).then((data) => {
-    //     $('#ddayplanwrite').empty()
-    //     let rows = data['weatherResult']
-    //     console.log(rows)
+    function show_weather() {    /*python에서 하나씩 데이터가 안받아져서 그냥 데이터 다 가져오고 거기서 object 객체의 마지막 순번을 가져왔습니다.*/
+      fetch('/weatherdata').then((res) => res.json()).then((data) => {
+        $('#weather').empty()
+        let rows = data['weatherResult']
+        // let dayy = Object.values(rows)[Object.values(rows).length - 1]
+        // let weather = Object.values(dayy)[0]
 
-    //     /* into html */
-    //     let temp_html = `<b class="ddate-style" id="dday">D-day ${resulttime}</b>
-    //   <b class="ddate-style" id="ddayplanwrite">${convdplan}</b>
-    //   <b id="weater" class="ddate-style"></b>
-    //   `
-    //     $('#dday').append(temp_html)
+        /* into html */
+        let temp_html = `<p id="weather" class="weather-style">오늘의 날씨:) : ${rows}</p>`
+        $('#weather').append(temp_html)
 
-    //   })
-    // }
+      })
+    }
 
 
 
@@ -466,17 +485,20 @@
   <div class="mybox0">
     <div class="mybox">
       <h1>Study Planner
+        <p id="weather" class="weather-style"><script>show_weather()</script></p>
         <p class="date-style" id="presentdate">
           <script>present_date()</script>
         </p>
         <b id="dday" class="ddate-style"><script>show_dday()</script></b>
-
+        
       </h1>
+      
       <div>
         <!-- <p></p> -->
         <input type="text" class="cal-box" id="datepicker" placeholder="d-day 선택 버튼">
         <input id="ddaysave" class="dday-input" type="text" placeholder="d-day 목표" />
         <button onclick="save_ddayplan()" type="button" class="button">시작!</button>
+
       </div>
       {% if logged_in %}
       <a>환영합니다, {{ username }}!</a>

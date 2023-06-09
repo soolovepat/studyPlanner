@@ -2,6 +2,7 @@ from flask import Flask,session, redirect, url_for, render_template, request, js
 from bs4 import BeautifulSoup as bs
 from pprint import pprint
 import requests
+import urllib
 
 
 app = Flask(__name__)
@@ -82,15 +83,19 @@ def ddayplan_get():
     return jsonify({'ddayResult': ddplans})
 #---------------------------------------------D-DAY 플랜 DB END
 
-# @app.route("/study_ddayplan", methods=["GET"])
-# def weather_get():
-#     html = requests.get('https://search.naver.com/search.naver?query=날씨')
-#     soup = bs(html.text,'html.parser')
+@app.route("/weatherdata", methods=["GET"])
+def weather_get():
+    ## 크롤링... 일단 구현 해놓고 공공데이터 가져와 볼게요
+    webpage = urllib.request.urlopen('https://search.naver.com/search.naver?sm=top_hty&fbm=0&ie=utf8&query=%EC%84%9C%EC%9A%B8%EB%82%A0%EC%94%A8')
 
-#     data1 = soup.find('span',{'class':'blind'})
+    soup = bs(webpage, 'html.parser')
+    temps = soup.find('div','temperature_text')
+    summary = soup.find('p','summary')
+    # print(temps)
+    weahter = "서울 "+temps.text.strip()+summary.text.strip()
+    return jsonify({'weatherResult': weahter})
 
-#     ## 뭐지
-#     return jsonify({'weatherResult': data1})
+
 
 
 
