@@ -95,7 +95,7 @@ def weather_get():
     weahter = "서울 "+temps.text.strip()+summary.text.strip()
     return jsonify({'weatherResult': weahter})
 
-
+#---------------------------------------------weather
 
 
 
