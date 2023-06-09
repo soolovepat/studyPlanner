@@ -56,12 +56,20 @@
       font-family: "Gowun Dodum", sans-serif;
     }
 
+    body {
+      background-color: #D9D9D9;
+    } 
+
     .mybox0 {
       width: 90%;
       margin: 20px auto;
 
       color: #000;
-      box-shadow: 0px 0px 10px 0px lightblue;
+
+      border-radius: 20px;
+      box-shadow: 0px 0px 10px 0px #C7C7C7;
+      background-color: #fff;
+
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -199,6 +207,7 @@
       width: fit-content;
       margin: 0px 0px 45px auto;
     }
+
 
     .date-style {
       /*현재 날짜 css*/
@@ -349,24 +358,33 @@
       })
     }
 
+   
+
     function save_plan() {
-      let group = $('#group').val();
-      let plan = $('#plan').val();
-      let username = '{{ session["username"] }}'; // Get the username from the Flask session
-
-      let formData = new FormData();
-      formData.append("group_give", group);
-      formData.append("plan_give", plan);
-      formData.append("username_give", username);
-      function done_plan(num) {
+        let group = $('#group').val();
+        let plan = $('#plan').val();
+        let username = '{{ session["username"] }}'; // Get the username from the Flask session
+      
         let formData = new FormData();
-        formData.append("num_give", num);
+        formData.append("group_give", group);
+        formData.append("plan_give", plan);
+        formData.append("username_give", username);
 
-        fetch('/study_planner/done', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
-          alert(data["msg"]);
-          window.location.reload();
-        });
-      }
+        fetch('/study_planner', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
+        alert(data["msg"]);
+        window.location.reload();
+      });
+
+    }
+
+    function done_plan(num) {
+      let formData = new FormData();
+      formData.append("num_give", num);
+
+      fetch('/study_planner/done', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
+        alert(data["msg"]);
+        window.location.reload();
+      });
     }
 
     function undo_plan(num) {
