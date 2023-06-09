@@ -138,37 +138,6 @@
       transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
       
       }
-
-      .days {
-        background-color:   rgb(247, 247, 247);
-        width: 30px;
-        display: inline;
-        padding: 20px 20px;
-        border-radius: 50%;
-        margin: auto;
-        font-size: 15px;
-    }
-
-    .days:hover {
-        background-color: rgb(132, 133, 127);
-    }
-
-    .days:active {
-        transform: scale(0.9);
-    }
-
-
-    .days_all {
-        width: fit-content;
-        margin-top: 10px;
-        display: inline-block;
-        padding: 30px;
-    }
-
-    .date {
-        width: fit-content;
-        margin: 0px 0px 45px auto;
-    }
     </style>
     <script>
       
@@ -181,31 +150,24 @@
       }, 1000); // 1초 후에 이동
       }
 
-      // 입력값 저장
       function save_plan() {
-        let group = $('#group').val();
-        let plan = $('#plan').val();
-        let day = $('#selected-day').val();
-        
-        
+        let group = $('#group').val()
+        let plan = $('#plan').val()
         
         let formData = new FormData();
         formData.append("group_give", group);
         formData.append("plan_give", plan);
-        formData.append("day_give", day);
-        
-        fetch('/input_form', {
-          method: "POST",
-          body: formData,
-        })
+
+        fetch('/input_form', {method: "POST",body: formData,})
         .then((response) => response.json())
         .then((data) => {
-          alert(data["msg"]);
-          window.location.reload();
-        });
+            
+            // 저장이 완료되면 알림 표시 및 페이지 이동
+            showNotification();
+            
+          });
       }
 
-      // 완료로 상태 수정
       function done_plan(num) {
         let formData = new FormData();
         formData.append("num_give", num);
@@ -215,8 +177,7 @@
             window.location.reload();
           });
       }
-      
-      // 상태 되돌리기
+
       function undo_plan(num) {
         let formData = new FormData();
         formData.append("num_give", num);
@@ -227,7 +188,6 @@
           });
       }
 
-      
       
     </script>
   </head>
@@ -240,43 +200,19 @@
         
         <div class="myplan">
           <div class="input-group">
-            <select class="form-s select" id="selected-day">
-                <option selected>요일 선택</option>
-                <option value="mon">월</option>
-                <option value="tue">화</option>
-                <option value="wed">수</option>
-                <option value="thur">목</option>
-                <option value="fri">금</option>
-                <option value="sat">토</option>
-                <option value="sun">일</option>
-            </select>
-          </div>
-          <div class="input-group">
             <select class="form-s select" id="group">
                 <option selected>그룹 선택</option>
                 <option value="1">공부 계획</option>
                 <option value="2">할 일</option>
             </select>
           </div>
-          <input id="plan" class="plan-input" type="text" placeholder="할 일을 입력하세요" />
-            <!--div id="selected-day" style="display: none;"></div>
-            <ul class="days_all">
-                <li class="days" onclick="loadPage('mon')" data-day="월">월</li>
-                <li class="days" onclick="loadPage('tue')" data-day="화">화</li>
-                <li class="days" onclick="loadPage('wed')" data-day="수">수</li>
-                <li class="days" onclick="loadPage('thur')" data-day="목">목</li>
-                <li class="days" onclick="loadPage('fri')" data-day="금">금</li>
-                <li class="days" onclick="loadPage('sat')" data-day="토">토</li>
-                <li class="days" onclick="loadPage('sun')" data-day="일">일</li>
-            </ul-->
+          <input
+            id="plan" class="plan-input" type="text" placeholder="할 일을 입력하세요" />
           <button onclick="save_plan()" type="button" class="btn btn-outline-primary">기록하기</button>
           
         </div>
       </div>
-      <div id="pageContent"> 
-        <!-- 요일별 리스트 여기에 기제 -->
-    
-    </div>
+      
     </div>
   </body>
 </html>

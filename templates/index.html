@@ -169,6 +169,37 @@
 
     }
 
+    .days {
+      background-color: rgb(247, 247, 247);
+      width: 30px;
+      display: inline;
+      padding: 20px 20px;
+      border-radius: 50%;
+      margin: auto;
+      font-size: 15px;
+    }
+
+    .days:hover {
+      background-color: rgb(132, 133, 127);
+    }
+
+    .days:active {
+      transform: scale(0.9);
+    }
+
+
+    .days_all {
+      width: fit-content;
+      margin-top: 10px;
+      display: inline-block;
+      padding: 30px;
+    }
+
+    .date {
+      width: fit-content;
+      margin: 0px 0px 45px auto;
+    }
+
     .date-style {
       /*현재 날짜 css*/
       font-size: medium;
@@ -286,7 +317,7 @@
   <script>
     $(document).ready(function () {
       show_plan();
-      show_dday();
+      show_weather()
     });
     function show_plan() {
 
@@ -405,35 +436,16 @@
 
     function show_weather() {    /*python에서 하나씩 데이터가 안받아져서 그냥 데이터 다 가져오고 거기서 object 객체의 마지막 순번을 가져왔습니다.*/
       fetch('/weatherdata').then((res) => res.json()).then((data) => {
-        $('#ddayplanwrite').empty()
+        $('#weather').empty()
         let rows = data['weatherResult']
-        console.log(rows)
+        // let dayy = Object.values(rows)[Object.values(rows).length - 1]
+        // let weather = Object.values(dayy)[0]
 
         /* into html */
-        let temp_html = `<b class="ddate-style" id="dday">D-day ${resulttime}</b>
-        <b class="ddate-style" id="ddayplanwrite">${convdplan}</b>
-        <b id="weater" class="ddate-style"></b>
-        `
-        $('#dday').append(temp_html)
+        let temp_html = `<p id="weather" class="weather-style">오늘의 날씨:) : ${rows}</p>`
+        $('#weather').append(temp_html)
 
-      switch (pageName) {
-        case "mon":
-          return "<p>월요일입니다</p>";
-        case "tue":
-          return "<p>화요일입니다</p>";
-        case "wed":
-          return "<p>수요일입니다</p>";
-        case "thur":
-          return "<p>목요일입니다</p>";
-        case "fri":
-          return "<p>금요일입니다</p>";
-        case "sat":
-          return "<p>토요일입니다</p>";
-        case "sun":
-          return "<p>일요일입니다</p>";
-        default:
-          return "<h1>Page Not Found</h1><p>The requested page does not exist.</p>";
-      }
+      })
     }
 
 
@@ -477,10 +489,8 @@
         <p class="date-style" id="presentdate">
           <script>present_date()</script>
         </p>
-        <!-- 자꾸 빈공간이 생겨서 원래 소스 코드는 삭제 : script /* into html */ 참고-->
-        <b id="dday" class="ddate-style"></b>
-     
-      
+        <b id="dday" class="ddate-style"><script>show_dday()</script></b>
+        
       </h1>
       
       <div>
@@ -516,6 +526,10 @@
       </div>
 
       <div class="myplan">
+        <form action="{{ url_for('input_form') }}" method="GET">
+          <button type="submit">기록하러가기</button>
+          <a href="/form_view">서브페이지로 이동</a>
+        </form>
         <div class="input-group">
           <select class="form-s select" id="group">
             <option selected>그룹 선택</option>
@@ -531,11 +545,12 @@
       <!-- 요일별 리스트 여기에 기제 -->
 
     </div>
-    <div id="pageContent">
-      <!-- 요일별 리스트 여기에 기제 -->
-
+    <div class="mybox" id="plan-list">
+      <li>
+        <h2>✅ JS 공부하기</h2>
+        <a></a>
+      </li>
     </div>
-    
   </div>
 </body>
 
