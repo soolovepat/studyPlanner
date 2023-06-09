@@ -1,7 +1,8 @@
-from flask import Flask,session, redirect, url_for, render_template, request, jsonify,flash
+from flask import Flask, render_template, request, jsonify
 from bs4 import BeautifulSoup as bs
 from pprint import pprint
 import requests
+
 
 
 app = Flask(__name__)
@@ -82,107 +83,15 @@ def ddayplan_get():
     return jsonify({'ddayResult': ddplans})
 #---------------------------------------------D-DAY 플랜 DB END
 
-# @app.route("/study_ddayplan", methods=["GET"])
-# def weather_get():
-#     html = requests.get('https://search.naver.com/search.naver?query=날씨')
-#     soup = bs(html.text,'html.parser')
+@app.route("/study_ddayplan", methods=["GET"])
+def weather_get():
+    html = requests.get('https://search.naver.com/search.naver?query=날씨')
+    soup = bs(html.text,'html.parser')
 
-#     data1 = soup.find('span',{'class':'blind'})
+    data1 = soup.find('span',{'class':'blind'})
 
-#     ## 뭐지
-#     return jsonify({'weatherResult': data1})
-
-
-
-# 서브페이지 - 데이터 저장
-@app.route("/input_form", methods=["GET", "POST"])
-def input_form():
-    if request.method == "POST":
-        group_receive = request.form['group_give']
-        plan_receive = request.form['plan_give']
-        day_receive = request.form['day_give']
-        
-        if day_receive not in ["mon", "tue", "wed", "thur", "fri", "sat", "sun"]:
-            return jsonify({"msg": "요일을 선택해주세요!"})
-        
-        plan_list = list(db.study_planner.find({}, {'_id': False}))
-        count = len(plan_list) + 1
-        
-        doc = {
-            'group': group_receive,
-            'plan': plan_receive,
-            'day': day_receive,
-            'num': count,
-            'done': 0
-        }
-        db.study_planner.insert_one(doc)
-        
-        return jsonify({"msg": "저장 완료!"})
-            
-    return render_template("input_form.html")
-
-def show_notification():
-    time.sleep(5)
-    with app.app_context():
-        return redirect(url_for("form_view"))
-
-   
-# 뷰페이지 - 데이터 조회
-@app.route('/form_view')
-def form_view():
-    data = list(db.study_planner.find({}, {'_id': False}))
-    return render_template('form_view.html', result=data)
-    
-#로그인 회원가입
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.config['SESSION_TYPE'] = 'filesystem'
-
-users_collection = db['users']
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        user = users_collection.find_one({'username': username})
-
-        if user and user['password'] == password:
-            session['username'] = username
-            return redirect(url_for('index'))
-        else:
-            flash('아이디 또는 비밀번호가 틀렸습니다')
-            return redirect(url_for('login'))
-
-    return render_template('login.html')
-
-# 회원가입
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        existing_user = users_collection.find_one({'username': username})
-
-        if existing_user:
-            flash('이미 사용중인 아이디 입니다')
-            return redirect(url_for('register'))
-
-        new_user = {'username': username, 'password': password}
-        users_collection.insert_one(new_user)
-
-        flash('회원가입성공! 로그인해주세요')
-        return redirect(url_for('login'))
-
-    return render_template('register1.html')
-
-
-
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('index'))
-
+    ## 뭐지
+    return jsonify({'weatherResult': data1})
 
 if __name__ == '__main__':
     
