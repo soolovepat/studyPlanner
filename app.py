@@ -81,8 +81,8 @@ def ddayplan_post():
 def ddayplan_get():
     ddplans = list(db.dday_plan.find({},{'_id':False}))
     return jsonify({'ddayResult': ddplans})
-#---------------------------------------------D-DAY 플랜 DB END
 
+#---------------------------------------------weather
 @app.route("/weatherdata", methods=["GET"])
 def weather_get():
     ## 크롤링... 일단 구현 해놓고 공공데이터 가져와 볼게요
@@ -95,7 +95,7 @@ def weather_get():
     # print(temps)
     weahter = "서울 "+temps.text.strip()+summary.text.strip()
     return jsonify({'weatherResult': weahter})
-#---------------------------------------------weather
+
 
 
 

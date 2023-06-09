@@ -396,6 +396,8 @@
         window.location.reload();
       });
     }
+
+
     /*-----------------------------------날씨 & 날짜 & d-day-----------------------------------*/
     function present_date() {   /*현재 날짜는 javascript 기본 api 사용 python으로 굳이 할 필요 없을듯*/
       let today = new Date();
@@ -449,6 +451,7 @@
       })
     }
 
+    /* --------------------------- 날씨 --------------------------- */
     function show_weather() {    /*python에서 하나씩 데이터가 안받아져서 그냥 데이터 다 가져오고 거기서 object 객체의 마지막 순번을 가져왔습니다.*/
       fetch('/weatherdata').then((res) => res.json()).then((data) => {
         $('#weather').empty()
