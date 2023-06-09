@@ -200,18 +200,7 @@
       margin: 0px 0px 45px auto;
     }
 
-      function save_plan() {
-        let group = $('#group').val();
-        let plan = $('#plan').val();
-        let username = '{{ session["username"] }}'; // Get the username from the Flask session
-      
-        let formData = new FormData();
-        formData.append("group_give", group);
-        formData.append("plan_give", plan);
-        formData.append("username_give", username);
-
-    }
-
+    
     .ddate-style {
       /*디데이 css*/
       display: inline;
@@ -328,18 +317,23 @@
       })
     }
 
+   
+
     function save_plan() {
-      let group = $('#group').val()
-      let plan = $('#plan').val()
+        let group = $('#group').val();
+        let plan = $('#plan').val();
+        let username = '{{ session["username"] }}'; // Get the username from the Flask session
+      
+        let formData = new FormData();
+        formData.append("group_give", group);
+        formData.append("plan_give", plan);
+        formData.append("username_give", username);
 
-      let formData = new FormData();
-      formData.append("group_give", group);
-      formData.append("plan_give", plan);
-
-      fetch('/study_planner', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
+        fetch('/study_planner', { method: "POST", body: formData, }).then((response) => response.json()).then((data) => {
         alert(data["msg"]);
         window.location.reload();
       });
+
     }
 
     function done_plan(num) {
