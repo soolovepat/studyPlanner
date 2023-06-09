@@ -14,6 +14,7 @@ import threading
 import time
 from pymongo import MongoClient
 client = MongoClient('mongodb+srv://powerlife145:test@cluster0.yg0ur8n.mongodb.net/')
+
 db = client.dbsparta
 
 @app.route('/')
@@ -189,7 +190,9 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
-
 if __name__ == '__main__':
-    
+
+
+    app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.run('0.0.0.0', port=5000, debug=True)
