@@ -506,29 +506,16 @@
       <div class="myplan">
         <form action="{{ url_for('input_form') }}" method="GET">
           <button type="submit">기록하러가기</button>
-          <a href="/form_view">서브페이지로 이동</a>
+          <a href="/form_view">계획 확인하기</a>
         </form>
-        <div class="input-group">
-          <select class="form-s select" id="group">
-            <option selected>그룹 선택</option>
-            <option value="1">공부 계획</option>
-            <option value="2">할 일</option>
-          </select>
-        </div>
-        <input id="plan" class="plan-input" type="text" placeholder="할 일을 입력하세요" />
-        <button onclick="save_plan()" type="button" class="btn btn-outline-primary">기록하기</button>
+       
       </div>
     </div>
     <div id="pageContent">
       <!-- 요일별 리스트 여기에 기제 -->
 
     </div>
-    <div class="mybox" id="plan-list">
-      <li>
-        <h2>✅ JS 공부하기</h2>
-        <a></a>
-      </li>
-    </div>
+    
   </div>
 </body>
 

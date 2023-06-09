@@ -12,7 +12,7 @@ app.config['PREFERRED_URL_SCHEME'] = 'http'  # URL 스킴을 설정합니다.
 import threading
 import time
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://powerlife145:test@cluster0.yg0ur8n.mongodb.net/')
+client = MongoClient('mongodb+srv://sparta:test@cluster0.efcklz9.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
 
@@ -100,21 +100,22 @@ def input_form():
     if request.method == "POST":
         group_receive = request.form['group_give']
         plan_receive = request.form['plan_give']
+        day_receive = request.form['day_give']
+        
+        if day_receive not in ["mon", "tue", "wed", "thur", "fri", "sat", "sun"]:
+            return jsonify({"msg": "요일을 선택해주세요!"})
+        
         plan_list = list(db.study_planner.find({}, {'_id': False}))
         count = len(plan_list) + 1
         
-        # MongoDB에 데이터 저장
         doc = {
-        'group':group_receive,
-        'plan':plan_receive,
-        'num': count,
-        'done': 0
+            'group': group_receive,
+            'plan': plan_receive,
+            'day': day_receive,
+            'num': count,
+            'done': 0
         }
         db.study_planner.insert_one(doc)
-
-        # 알림 스레드 시작
-        t = threading.Thread(target=show_notification)
-        t.start()
         
         return jsonify({"msg": "저장 완료!"})
             
