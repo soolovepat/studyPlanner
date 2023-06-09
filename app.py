@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask,session, redirect, url_for, render_template, request, jsonify,flash
 app = Flask(__name__)
 app.config['SERVER_NAME'] = 'localhost:5000'
 app.config['APPLICATION_ROOT'] = '/'  # 애플리케이션의 루트 경로를 설정합니다.
@@ -12,9 +12,15 @@ from pymongo import MongoClient
 client = MongoClient('mongodb+srv://sparta:test@cluster0.efcklz9.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
+
 @app.route('/')
-def home():
-    return render_template('index.html')
+def index():
+    if 'username' in session:
+        username = session['username']
+        logged_in = True
+        return render_template('index.html', username=username, logged_in=logged_in)
+    else:
+        return redirect(url_for('login'))
 
 # DB 저장
 @app.route("/study_planner", methods=["POST"])
@@ -23,7 +29,7 @@ def plan_post():
     plan_receive = request.form['plan_give']
     plan_list = list(db.study_planner.find({}, {'_id': False}))
     count = len(plan_list) + 1
-
+      
     doc = {
         'group':group_receive,
         'plan':plan_receive,
@@ -112,5 +118,5 @@ def form_view():
 
 
 if __name__ == '__main__':
-
+    
     app.run('0.0.0.0', port=5000, debug=True)
