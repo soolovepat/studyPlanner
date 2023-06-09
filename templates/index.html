@@ -169,103 +169,42 @@
 
     }
 
-    .date-style {
-      /*현재 날짜 css*/
-      font-size: medium;
-      text-align: right;
-      float: right;
-      width: 200px;
-      padding: 2px;
-      background-color: white;
-
-    }
-
-    .ddate-style {
-      /*디데이 css*/
+    .days {
+      background-color: rgb(247, 247, 247);
+      width: 30px;
       display: inline;
-      font-size: medium;
-      text-align: right;
-      float: right;
-      width: 100px;
-      padding: 2px;
-      background-color: white;
-
-    }
-
-    .ddayplan-style {
-      /*디데이 플랜관련 css*/
-      font-size: 16px;
-      display: inline block;
-      text-align: right;
-      float: right;
-      width: 250px;
-      height: 18px;
-      padding: 1.2px;
-      background-color: white;
-      font-weight: 300px;
-      text-overflow: ellipsis;
-      /*글자 길면 ...형태로*/
-      white-space: nowrap;
-      /*줄바꿈 하지 않겠음*/
-    }
-
-    .dday-input {
-      /*dday input (css 잘몰라서 통합과정 생략)*/
-      text-align: right;
-      float: right;
-      display: inline;
-      padding: 0.375rem 0.75rem;
-      font-size: 0.8rem;
-      font-weight: 400;
-      line-height: 1.3;
-      color: #212529;
-      background-color: white;
-      background-clip: padding-box;
-      border: 1px solid #ced4da;
-      border-radius: 0.25rem;
-      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-      text-overflow: ellipsis;
-      margin: 5px 3px;
-    }
-
-    .button {
-      /*btn 못생겨서 만들었음*/
-      background-color: rgb(147, 147, 157);
-      float: right;
-      border: none;
-      color: white;
-      padding: 8px 10px;
-      text-align: center;
-      text-decoration: none;
-      display: inline;
-      font-size: 14px;
-      margin: 0px 3px;
-      cursor: pointer;
-      border-radius: 10%;
-    }
-
-    .cal-box {
-      /*디데이 플랜관련 css*/
+      padding: 20px 20px;
+      border-radius: 50%;
+      margin: auto;
       font-size: 15px;
-      text-align: center;
-      float: right;
-      width: 110px;
-      height: 30px;
-      padding: 1.2px;
-      background-color: rgb(140, 206, 169);
-      font-weight: 300px;
-      text-overflow: ellipsis;
-      /*글자 길면 ...형태로*/
-      white-space: nowrap;
-      /*줄바꿈 하지 않겠음*/
-      border-radius: 15%;
+    }
+
+    .days:hover {
+      background-color: rgb(132, 133, 127);
+    }
+
+    .days:active {
+      transform: scale(0.9);
+    }
+
+
+    .days_all {
+      width: fit-content;
+      margin-top: 10px;
+      display: inline-block;
+      padding: 30px;
+    }
+
+    .date {
+      width: fit-content;
+      margin: 0px 0px 45px auto;
     }
   </style>
+
 
   <script>
     $(document).ready(function () {
       show_plan();
-      show_dday();
     });
     function show_plan() {
 
@@ -329,7 +268,7 @@
         window.location.reload();
       });
     }
-/*-----------------------------------날씨 & 날짜 & d-day-----------------------------------*/
+    /*-----------------------------------날씨 & 날짜 & d-day-----------------------------------*/
     function present_date() {   /*현재 날짜는 javascript 기본 api 사용 python으로 굳이 할 필요 없을듯*/
       let today = new Date();
       let day = ['일', '월', '화', '수', '목', '금', '토',]
@@ -351,51 +290,77 @@
         alert(data["msg"]);
         window.location.reload();
       });
-    }
 
-    function show_dday() {    /*python에서 하나씩 데이터가 안받아져서 그냥 데이터 다 가져오고 거기서 object 객체의 마지막 순번을 가져왔습니다.*/
-      fetch('/study_ddayplan').then((res) => res.json()).then((data) => {
-        $('#ddayplanwrite').empty()
-        let rows = data['ddayResult']
-        console.log(rows)
-        /* dday 카운터 기능 */
-        let today = new Date();
-        let ddaytime = Object.values(rows)[Object.values(rows).length - 1]
-        let convdday = Object.values(ddaytime)[0]
-        console.log(Date(2023,1,14))
+      function show_dday() {    /*python에서 하나씩 데이터가 안받아져서 그냥 데이터 다 가져오고 거기서 object 객체의 마지막 순번을 가져왔습니다.*/
+        fetch('/study_ddayplan').then((res) => res.json()).then((data) => {
+          $('#ddayplanwrite').empty()
+          let rows = data['ddayResult']
+          console.log(rows)
+          /* dday 카운터 기능 */
+          let today = new Date();
+          let ddaytime = Object.values(rows)[Object.values(rows).length - 1]
+          let convdday = Object.values(ddaytime)[0]
+          console.log(Date(2023, 1, 14))
 
-        let dday =new Date(convdday);
-        let gap = dday.getTime()-today.getTime();
-        let resulttime = Math.ceil(gap/(1000*60*60*24));
+          let dday = new Date(convdday);
+          let gap = dday.getTime() - today.getTime();
+          let resulttime = Math.ceil(gap / (1000 * 60 * 60 * 24));
 
-        /* dday plan */
-        let ddplan = Object.values(rows)[Object.values(rows).length-1]
-        let convdplan = Object.values(ddplan)[1] 
+          /* dday plan */
+          let ddplan = Object.values(rows)[Object.values(rows).length - 1]
+          let convdplan = Object.values(ddplan)[1]
 
-        /* into html */
-        let temp_html = `<b class="ddate-style" id="dday">D-day ${resulttime}</b>
+          /* into html */
+          let temp_html = `<b class="ddate-style" id="dday">D-day ${resulttime}</b>
         <b class="ddate-style" id="ddayplanwrite">${convdplan}</b>
         <b id="weater" class="ddate-style"></b>
         `
-        $('#dday').append(temp_html)
+          $('#dday').append(temp_html)
 
-      })
-    }
+        })
+      }
 
-    function show_weather() {    /*python에서 하나씩 데이터가 안받아져서 그냥 데이터 다 가져오고 거기서 object 객체의 마지막 순번을 가져왔습니다.*/
-      fetch('/weatherdata').then((res) => res.json()).then((data) => {
-        $('#ddayplanwrite').empty()
-        let rows = data['weatherResult']
-        console.log(rows)
+      function show_weather() {    /*python에서 하나씩 데이터가 안받아져서 그냥 데이터 다 가져오고 거기서 object 객체의 마지막 순번을 가져왔습니다.*/
+        fetch('/weatherdata').then((res) => res.json()).then((data) => {
+          $('#ddayplanwrite').empty()
+          let rows = data['weatherResult']
+          console.log(rows)
 
-        /* into html */
-        let temp_html = `<b class="ddate-style" id="dday">D-day ${resulttime}</b>
+          /* into html */
+          let temp_html = `<b class="ddate-style" id="dday">D-day ${resulttime}</b>
         <b class="ddate-style" id="ddayplanwrite">${convdplan}</b>
         <b id="weater" class="ddate-style"></b>
         `
-        $('#dday').append(temp_html)
+          $('#dday').append(temp_html)
 
-      })
+        })
+      }
+
+    } function loadPage(pageName) { //요일별 스크립트
+      var pageContent = getPageContent(pageName);
+      document.getElementById("pageContent").innerHTML = pageContent;
+    }
+
+    function getPageContent(pageName) {
+
+      switch (pageName) {
+        case "mon":
+          return "<p>월요일입니다</p>";
+        case "tue":
+          return "<p>화요일입니다</p>";
+        case "wed":
+          return "<p>수요일입니다</p>";
+        case "thur":
+          return "<p>목요일입니다</p>";
+        case "fri":
+          return "<p>금요일입니다</p>";
+        case "sat":
+          return "<p>토요일입니다</p>";
+        case "sun":
+          return "<p>일요일입니다</p>";
+        default:
+          return "<h1>Page Not Found</h1><p>The requested page does not exist.</p>";
+      }
     }
 
 
@@ -411,19 +376,43 @@
         </p>
         <!-- 자꾸 빈공간이 생겨서 원래 소스 코드는 삭제 : script /* into html */ 참고-->
         <b id="dday" class="ddate-style"></b>
-     
-      
       </h1>
       <div>
         <!-- <p></p> -->
-        <input type="text" class="cal-box" id="datepicker" placeholder="d-day 선택 버튼" >
+        <input type="text" class="cal-box" id="datepicker" placeholder="d-day 선택 버튼">
         <input id="ddaysave" class="dday-input" type="text" placeholder="d-day 목표" />
         <button onclick="save_ddayplan()" type="button" class="button">시작!</button>
       </div>
+      {% if logged_in %}
+      <a>환영합니다, {{ username }}!</a>
+      <a href="{{ url_for('logout') }}">로그아웃</a>
+      {% else %}
+      <a href="{{ url_for('login') }}">로그인</a>
+      <a href="{{ url_for('register') }}">회원가입</a>
+      {% endif %}
+      <!-- <a href="{{ url_for('login') }}">로그인</a>
+        <a href="{{ url_for('register') }}">회원가입</a> -->
     </div>
     <div class="mybox">
+      <div> <!-- 요일별 -->
+        <ul class="days_all">
+          <li class="days" onclick="loadPage('mon')">월</li>
+          <li class="days" onclick="loadPage('tue')">화</li>
+          <li class="days" onclick="loadPage('wed')">수</li>
+          <li class="days" onclick="loadPage('thur')">목</li>
+          <li class="days" onclick="loadPage('fri')">금</li>
+          <li class="days" onclick="loadPage('sat')">토</li>
+          <li class="days" onclick="loadPage('sun')">일</li>
+  
+  
+      </ul>
+      </div>
 
       <div class="myplan">
+        <form action="{{ url_for('input_form') }}" method="GET">
+          <button type="submit">기록하러가기</button>
+          <a href="/form_view">서브페이지로 이동</a>
+        </form>
         <div class="input-group">
           <select class="form-s select" id="group">
             <option selected>그룹 선택</option>
@@ -435,6 +424,10 @@
         <button onclick="save_plan()" type="button" class="btn btn-outline-primary">기록하기</button>
       </div>
     </div>
+    <div id="pageContent"> 
+      <!-- 요일별 리스트 여기에 기제 -->
+  
+  </div>
     <div class="mybox" id="plan-list">
       <li>
         <h2>✅ JS 공부하기</h2>
@@ -445,6 +438,3 @@
 </body>
 
 </html>
-
-
-<!-- 여기도 바뀌면 될까요??? -->
