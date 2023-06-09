@@ -184,11 +184,17 @@ def register():
     return render_template('register1.html')
 
 
+@app.route('/timer')
+def timer():
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+
 
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('timer.html'))
 
 if __name__ == '__main__':
 

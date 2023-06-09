@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>Study Timer</title>
+    <style>
+        .title {
+            font-size: 55px;
+            margin-left: 100px;
+            margin-top: 80px;
+        }
+
+        .table {
+            background-color: beige;
+            width: 100%;
+            height: 770px;
+            padding-top: 80px;
+
+            text-align: center;
+        }
+
+        .desc {
+            margin-top: 40px;
+        }
+
+        .btn-circle {
+            width: 100px;
+            height: 55px;
+            margin: 0px 10px 0px 10px;
+            padding: 0px 0px 5px 0px;
+            border-radius: 25px;
+            font-size: 30px;
+            border-color: blanchedalmond;
+            border-width: 3px;
+        }
+    </style>
+
+    <script>
+        let countdown_interval;
+        let total_seconds = 1500; // 25분
+        let is_countdown_running = false;
+        let is_five_minutes_timer = false;
+
+        function start_countdown() {
+            if (!is_countdown_running) {
+                countdown_interval = setInterval(update_countdown, 1000);
+                is_countdown_running = true;
+            }
+        }
+
+        function stop_countdown() {
+            clearInterval(countdown_interval);
+            is_countdown_running = false;
+        }
+
+        function reset_countdown() {
+            stop_countdown();
+            total_seconds = 1500; // 25분으로 재설정
+            updateTimerDisplay();
+        }
+
+        /////////////////////////알림창 소리 있던 곳////////////////////////
+
+
+        function showAlertWithSound(message) {
+            playNotificationSound();
+
+            // 커스텀 알림창 생성
+            let modal = document.createElement('div');
+            modal.className = 'custom-alert';
+            modal.textContent = message;
+
+            // 알림창 스타일 설정
+            modal.style.position = 'fixed';
+            modal.style.top = '50%';
+            modal.style.left = '50%';
+            modal.style.transform = 'translate(-50%, -50%)';
+            modal.style.padding = '30px';
+            modal.style.background = 'white';
+            modal.style.border = '1px solid black';
+            modal.style.boxShadow = '0 4px 4px rgba(0, 0, 0, 0.5)';
+
+            // 알림창을 body(문서)에 추가
+            document.body.appendChild(modal);
+
+            // 일정 시간 후에 알림창 제거
+            setTimeout(function () {
+                document.body.removeChild(modal);
+            }, 3000); // 3초 후에 알림창 제거
+        }
+        //////////////////알림창 소리///////////////////
+
+        function update_countdown() {
+            if (total_seconds <= 0) {
+                stop_countdown();
+                if (is_five_minutes_timer) {
+                    showAlertWithSound("초집중 상태로 공부해 봐요! 25분 타이머를 시작합니다."); // 5분 타이머 완료 알림창     // 수정1
+                    total_seconds = 1500; // 25분으로 재설정
+                    is_five_minutes_timer = false;
+                } else {
+                    showAlertWithSound("지금부터 잠깐 쉬는 시간~ 5분 타이머를 시작합니다."); // 25분 타이머 완료 알림창    // 수정2
+                    total_seconds = 300; // 5분으로 재설정 
+                    is_five_minutes_timer = true;
+                }
+                updateTimerDisplay();
+                setTimeout(start_countdown, 1000); // 1초 후에 타이머 시작
+            } else {
+                total_seconds--;
+                updateTimerDisplay();
+            }
+        }
+
+        function updateTimerDisplay() {
+            // let hours = Math.floor(total_seconds / 3600);
+            let minutes = Math.floor((total_seconds % 3600) / 60);
+            let seconds = total_seconds % 60;
+
+            let time_string = pad(minutes) + ":" + pad(seconds);
+            document.getElementById("timer").innerText = time_string;
+
+
+        }
+
+        function pad(number) {
+            return (number < 10 ? "0" : "") + number;
+        }
+
+        function playNotificationSound() {
+            // 알림음을 재생하는 코드 작성
+            let audio = new Audio("data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7xA4Tvh9Rz/y8QADBwMWgQAZG/ILNAARQ4GLTcDeIIIhxGOBAuD7hOfBB3/94gcJ3w+o5/5eIAIAAAVwWgQAVQ2ORaIQwEMAJiDg95G4nQL7mQVWI6GwRcfsZAcsKkJvxgxEjzFUgfHoSQ9Qq7KNwqHwuB13MA4a1q/DmBrHgPcmjiGoh//EwC5nGPEmS4RcfkVKOhJf+WOgoxJclFz3kgn//dBA+ya1GhurNn8zb//9NNutNuhz31f////9vt///z+IdAEAAAK4LQIAKobHItEIYCGAExBwe8jcToF9zIKrEdDYIuP2MgOWFSE34wYiR5iqQPj0JIeoVdlG4VD4XA67mAcNa1fhzA1jwHuTRxDUQ//iYBczjHiTJcIuPyKlHQkv/LHQUYkuSi57yQT//uggfZNajQ3Vmz+Zt//+mm3Wm3Q576v////+32///5/EOgAAADVghQAAAAA//uQZAUAB1WI0PZugAAAAAoQwAAAEk3nRd2qAAAAACiDgAAAAAAABCqEEQRLCgwpBGMlJkIz8jKhGvj4k6jzRnqasNKIeoh5gI7BJaC1A1AoNBjJgbyApVS4IDlZgDU5WUAxEKDNmmALHzZp0Fkz1FMTmGFl1FMEyodIavcCAUHDWrKAIA4aa2oCgILEBupZgHvAhEBcZ6joQBxS76AgccrFlczBvKLC0QI2cBoCFvfTDAo7eoOQInqDPBtvrDEZBNYN5xwNwxQRfw8ZQ5wQVLvO8OYU+mHvFLlDh05Mdg7BT6YrRPpCBznMB2r//xKJjyyOh+cImr2/4doscwD6neZjuZR4AgAABYAAAABy1xcdQtxYBYYZdifkUDgzzXaXn98Z0oi9ILU5mBjFANmRwlVJ3/6jYDAmxaiDG3/6xjQQCCKkRb/6kg/wW+kSJ5//rLobkLSiKmqP/0ikJuDaSaSf/6JiLYLEYnW/+kXg1WRVJL/9EmQ1YZIsv/6Qzwy5qk7/+tEU0nkls3/zIUMPKNX/6yZLf+kFgAfgGyLFAUwY//uQZAUABcd5UiNPVXAAAApAAAAAE0VZQKw9ISAAACgAAAAAVQIygIElVrFkBS+Jhi+EAuu+lKAkYUEIsmEAEoMeDmCETMvfSHTGkF5RWH7kz/ESHWPAq/kcCRhqBtMdokPdM7vil7RG98A2sc7zO6ZvTdM7pmOUAZTnJW+NXxqmd41dqJ6mLTXxrPpnV8avaIf5SvL7pndPvPpndJR9Kuu8fePvuiuhorgWjp7Mf/PRjxcFCPDkW31srioCExivv9lcwKEaHsf/7ow2Fl1T/9RkXgEhYElAoCLFtMArxwivDJJ+bR1HTKJdlEoTELCIqgEwVGSQ+hIm0NbK8WXcTEI0UPoa2NbG4y2K00JEWbZavJXkYaqo9CRHS55FcZTjKEk3NKoCYUnSQ0rWxrZbFKbKIhOKPZe1cJKzZSaQrIyULHDZmV5K4xySsDRKWOruanGtjLJXFEmwaIbDLX0hIPBUQPVFVkQkDoUNfSoDgQGKPekoxeGzA4DUvnn4bxzcZrtJyipKfPNy5w+9lnXwgqsiyHNeSVpemw4bWb9psYeq//uQZBoABQt4yMVxYAIAAAkQoAAAHvYpL5m6AAgAACXDAAAAD59jblTirQe9upFsmZbpMudy7Lz1X1DYsxOOSWpfPqNX2WqktK0DMvuGwlbNj44TleLPQ+Gsfb+GOWOKJoIrWb3cIMeeON6lz2umTqMXV8Mj30yWPpjoSa9ujK8SyeJP5y5mOW1D6hvLepeveEAEDo0mgCRClOEgANv3B9a6fikgUSu/DmAMATrGx7nng5p5iimPNZsfQLYB2sDLIkzRKZOHGAaUyDcpFBSLG9MCQALgAIgQs2YunOszLSAyQYPVC2YdGGeHD2dTdJk1pAHGAWDjnkcLKFymS3RQZTInzySoBwMG0QueC3gMsCEYxUqlrcxK6k1LQQcsmyYeQPdC2YfuGPASCBkcVMQQqpVJshui1tkXQJQV0OXGAZMXSOEEBRirXbVRQW7ugq7IM7rPWSZyDlM3IuNEkxzCOJ0ny2ThNkyRai1b6ev//3dzNGzNb//4uAvHT5sURcZCFcuKLhOFs8mLAAEAt4UWAAIABAAAAAB4qbHo0tIjVkUU//uQZAwABfSFz3ZqQAAAAAngwAAAE1HjMp2qAAAAACZDgAAAD5UkTE1UgZEUExqYynN1qZvqIOREEFmBcJQkwdxiFtw0qEOkGYfRDifBui9MQg4QAHAqWtAWHoCxu1Yf4VfWLPIM2mHDFsbQEVGwyqQoQcwnfHeIkNt9YnkiaS1oizycqJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");
+            audio.play();
+        }
+    </script>
+
+
+
+</head>
+
+<body>
+    <h1 class="title">Pomodoro Study</h1>
+
+    <div class="table">
+        <h2 style="font-size: 40px;">Pomodoro Study Timer</h2>
+        <div class="desc">
+            <p>이 공부법으로 집중력 효율을 높여보세요!</p>
+            <p>하루 8번 까지 반복하는 걸 권장합니다!</p>
+            <p>쉬는 시간에 핸드폰 사용보단 스트레칭이나 물 마시기, 화장실 다녀오기가 더 좋아요!</p>
+            <p>아래 Timer를 사용하여 25분 공부, 5분 휴식을 반복해 보세요!</p>
+            <p>아래 Start를 누르시면 사이클을 계속 반복합니다!</p>
+        </div>
+        <p id="timer" style="font-size: 150px;">25:00</p>
+        <button onclick="start_countdown()" type="button" class="btn btn-light btn-circle">Start</button>
+        <button onclick="stop_countdown()" type="button" class="btn btn-light btn-circle">Stop</button>
+        <button onclick="reset_countdown()" type="button" class="btn btn-light btn-circle">Reset</button>
+    </div>    
+</body>
+
+</html>
