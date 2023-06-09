@@ -12,7 +12,7 @@ app.config['PREFERRED_URL_SCHEME'] = 'http'  # URL 스킴을 설정합니다.
 import threading
 import time
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:test@cluster0.ni7z7tt.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://sparta:test@cluster0.efcklz9.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
 #처음 화면

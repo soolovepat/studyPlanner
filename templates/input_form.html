@@ -32,17 +32,26 @@
       * {
         font-family: "Gowun Dodum", sans-serif;
       }
+      body {
+      background-color: #D9D9D9;
+      } 
+
       .mybox0 {
         width: 90%;
         margin: 20px auto;
 
         color: #000;
-        box-shadow: 0px 0px 10px 0px lightblue;
+
+        border-radius: 20px;
+        box-shadow: 0px 0px 10px 0px #C7C7C7;
+        background-color: #fff;
+
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
       }
+
 
       .mybox > h1 {
         max-width: 75%;
@@ -201,7 +210,7 @@
         .then((response) => response.json())
         .then((data) => {
           alert(data["msg"]);
-          window.location.reload();
+          window.location.href = "/form_view"; // 기록 후 form_view.html로 페이지 이동
         });
       }
 
