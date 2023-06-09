@@ -16,7 +16,6 @@ from pymongo import MongoClient
 client = MongoClient('mongodb+srv://powerlife145:test@cluster0.yg0ur8n.mongodb.net/')
 db = client.dbsparta
 
-
 @app.route('/')
 def index():
     if 'username' in session:
