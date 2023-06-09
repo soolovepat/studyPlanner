@@ -1,4 +1,9 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask,session, redirect, url_for, render_template, request, jsonify,flash
+from bs4 import BeautifulSoup as bs
+from pprint import pprint
+import requests
+
+
 app = Flask(__name__)
 app.config['SERVER_NAME'] = 'localhost:5000'
 app.config['APPLICATION_ROOT'] = '/'  # 애플리케이션의 루트 경로를 설정합니다.
@@ -6,9 +11,6 @@ app.config['PREFERRED_URL_SCHEME'] = 'http'  # URL 스킴을 설정합니다.
 
 import threading
 import time
-
-# import datetime as dt
-import datetime as dt
 from pymongo import MongoClient
 client = MongoClient('mongodb+srv://powerlife145:test@cluster0.yg0ur8n.mongodb.net/')
 db = client.dbsparta
@@ -80,15 +82,15 @@ def ddayplan_get():
     return jsonify({'ddayResult': ddplans})
 #---------------------------------------------D-DAY 플랜 DB END
 
-@app.route("/study_ddayplan", methods=["GET"])
-def weather_get():
-    html = requests.get('https://search.naver.com/search.naver?query=날씨')
-    soup = bs(html.text,'html.parser')
+# @app.route("/study_ddayplan", methods=["GET"])
+# def weather_get():
+#     html = requests.get('https://search.naver.com/search.naver?query=날씨')
+#     soup = bs(html.text,'html.parser')
 
-    data1 = soup.find('span',{'class':'blind'})
+#     data1 = soup.find('span',{'class':'blind'})
 
-    ## 뭐지
-    return jsonify({'weatherResult': data1})
+#     ## 뭐지
+#     return jsonify({'weatherResult': data1})
 
 
 
@@ -184,5 +186,3 @@ def logout():
 if __name__ == '__main__':
     
     app.run('0.0.0.0', port=5000, debug=True)
-
-    
