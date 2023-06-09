@@ -86,6 +86,7 @@ def ddayplan_get():
 @app.route("/weatherdata", methods=["GET"])
 def weather_get():
     ## 크롤링... 일단 구현 해놓고 공공데이터 가져와 볼게요
+    ## 또, 네이버는 ssl 업뎃을 지속적으로 해야해서 기상청 데이터 가져왔습니다(단순 웹 크롤링)
     webpage = urllib.request.urlopen('https://search.naver.com/search.naver?sm=top_hty&fbm=0&ie=utf8&query=%EC%84%9C%EC%9A%B8%EB%82%A0%EC%94%A8')
 
     soup = bs(webpage, 'html.parser')
@@ -136,6 +137,8 @@ def show_notification():
 def form_view():
     data = list(db.study_planner.find({}, {'_id': False}))
     return render_template('form_view.html', result=data)
+
+#------------------로그인 구현 시작------------------#
     
 #로그인 회원가입
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -149,7 +152,7 @@ def login():
         password = request.form['password']
 
         user = users_collection.find_one({'username': username})
-
+        print(user)
         if user and user['password'] == password:
             session['username'] = username
             return redirect(url_for('index'))
