@@ -114,7 +114,55 @@ def form_view():
     data = list(db.study_planner.find({}, {'_id': False}))
     return render_template('form_view.html', result=data)
     
+#로그인 회원가입
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.config['SESSION_TYPE'] = 'filesystem'
 
+users_collection = db['users']
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user = users_collection.find_one({'username': username})
+
+        if user and user['password'] == password:
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            flash('아이디 또는 비밀번호가 틀렸습니다')
+            return redirect(url_for('login'))
+
+    return render_template('login.html')
+
+# 회원가입
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        existing_user = users_collection.find_one({'username': username})
+
+        if existing_user:
+            flash('이미 사용중인 아이디 입니다')
+            return redirect(url_for('register'))
+
+        new_user = {'username': username, 'password': password}
+        users_collection.insert_one(new_user)
+
+        flash('회원가입성공! 로그인해주세요')
+        return redirect(url_for('login'))
+
+    return render_template('register1.html')
+
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
