@@ -6,14 +6,18 @@ import urllib
 
 
 app = Flask(__name__)
-app.config['SERVER_NAME'] = 'localhost:5000'
+app.config['SERVER_NAME'] = 'localhost:5001'
 app.config['APPLICATION_ROOT'] = '/'  # 애플리케이션의 루트 경로를 설정합니다.
 app.config['PREFERRED_URL_SCHEME'] = 'http'  # URL 스킴을 설정합니다.
 
 import threading
 import time
+
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://powerlife145:test@cluster0.yg0ur8n.mongodb.net/')
+import certifi
+ca = certifi.where()
+client = MongoClient('mongodb+srv://sparta:test@cluster0.ni7z7tt.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
+db = client.dbsparta
 
 db = client.dbsparta
 
@@ -190,9 +194,13 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
+@app.route('/timer')
+def logout():
+    return redirect(url_for('timer.html'))
+
 if __name__ == '__main__':
 
 
     app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)

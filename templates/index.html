@@ -366,6 +366,7 @@
         let username = '{{ session["username"] }}'; // Get the username from the Flask session
       
         let formData = new FormData();
+        let username = '{{ session["username"] }}';
         formData.append("group_give", group);
         formData.append("plan_give", plan);
         formData.append("username_give", username);
